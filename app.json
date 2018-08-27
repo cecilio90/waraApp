@@ -1,10 +1,24 @@
 {
   "expo": {
+    "name": "WaraWorkout",
+    "slug": "waraworkout",
     "sdkVersion": "27.0.0",
+    "privacy": "public",
     "android": {
       "package": "com.wara.myapp",
       "versionCode": 1,
-      "permissions": []
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA",
+        "MANAGE_DOCUMENTS",
+        "READ_CONTACTS",
+        "READ_CALENDAR",
+        "WRITE_CALENDAR",
+        "READ_EXTERNAL_STORAGE",
+        "VIBRATE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     }
   }
 }

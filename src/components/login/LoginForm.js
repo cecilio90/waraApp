@@ -55,7 +55,6 @@ class LoginForm extends React.Component{
 										charging: true
 									})
 									this._login();
-
 								});
 						}
 					});
@@ -102,13 +101,6 @@ class LoginForm extends React.Component{
     }
 
 	render() {
-		if (this.state.charging == true) {
-			return(
-				<View style={styles.container}>
-					{this.state.loading && <Spinner status={this.state.loading} />}
-				</View>
-			);
-		}else{
 			return(
 				<View style={styles.container}>
 					<Image style={styles.logo} source={ require('../../assets/imgs/logo.png') } />
@@ -141,7 +133,6 @@ class LoginForm extends React.Component{
 					</View>
 				</View>
 				);
-		}
 	}
 }
 
