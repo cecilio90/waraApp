@@ -37,6 +37,9 @@ export default class Menu extends React.Component{
                     <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('Califications')}>
                         <Text style={styles.opcMenu}>Calificaciones</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('ListNews') }>
+                        <Text style={styles.opcMenu}>Noticias</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.btnMenu} onPress={() => this._logout()}>
                         <Text style={styles.opcMenu}>Salir</Text>
                     </TouchableOpacity>

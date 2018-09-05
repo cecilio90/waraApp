@@ -31,34 +31,36 @@ class LoginForm extends React.Component{
 
 	_storeCredentials = async (correo, pass) => {
 		try {
-			await AsyncStorage.multiSet([
-				['correo',correo],
-				['pass',pass]
-			],
-			credentials);
+			const credentials = [correo, pass];
+			await AsyncStorage.setItem('@MySuperStore:credentials', JSON.stringify(credentials));
 		} catch (error) {
 			console.log(error);
 		}
 	}
 
 	_getToken = async () => {
+		this.setState({loading: false});
 		try {
 			await AsyncStorage.getItem('@MySuperStore:accessToken')
 					.then(dataAccess => {
-						console.log(dataAccess)
 						if (dataAccess != null) {
 							AsyncStorage.getItem('@MySuperStore:credentials')
 								.then(cred => {
-									this.setState({
-										email: JSON.parse(cred).correo,
-										password: JSON.parse(cred).pass,
-										charging: true
-									})
-									this._login();
+									var crede = JSON.parse(cred);
+									if (crede != null) {
+										this.setState({
+											email: crede[0],
+											password: crede[1],
+											charging: true,
+											loading: false
+										})
+										this._login();
+									}
 								});
 						}
 					});
 		} catch (error) {
+			this.setState({loading: false});
 			console.log(error);
 		}
 	}
@@ -101,6 +103,13 @@ class LoginForm extends React.Component{
     }
 
 	render() {
+		if (this.state.charging) {
+			return(
+				<View style={styles.container}>
+					{this.state.loading && <Spinner status={this.state.loading} />}
+				</View>
+			);
+		}else{
 			return(
 				<View style={styles.container}>
 					<Image style={styles.logo} source={ require('../../assets/imgs/logo.png') } />
@@ -132,7 +141,8 @@ class LoginForm extends React.Component{
 						</Button>
 					</View>
 				</View>
-				);
+			);
+		}
 	}
 }
 

@@ -6,19 +6,20 @@ import moment from 'moment';
 import { withNavigation, DrawerActions } from 'react-navigation';
 import LessonItem from './LessonItem';
 
+moment.updateLocale('es', {
+    months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+    monthsShort: 'Ene._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
+    weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
+    weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
+    weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
+});
+
 const { width, height } = Dimensions.get('window');
 
 class MainViewCalendar extends React.Component{
-    
+
     constructor(props){
         super(props);
-        moment.updateLocale('es', {
-            months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
-            monthsShort: 'Ene._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
-            weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
-            weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
-            weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
-        });
         this.state ={
             status:false,
             schedules: '',
@@ -68,6 +69,9 @@ class MainViewCalendar extends React.Component{
                 console.log(err + ' errooooooor');
             });           
         } catch (error) {
+            this.setState({
+                loading: false,
+            })
             console.log(error)
         }
     }
