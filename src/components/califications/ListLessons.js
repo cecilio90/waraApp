@@ -35,7 +35,8 @@ class ListLessons extends Component{
             })
                 .then(response => response.json())
                 .then(resp => {
-                    this.setState({ lessons: resp.data, loading: false })
+                    console.log(resp)
+                    this.setState({ lessons: resp, loading: false })
                 })
             .catch((error) => {
                 console.log(error);
