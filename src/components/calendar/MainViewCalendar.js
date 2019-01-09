@@ -66,7 +66,7 @@ class MainViewCalendar extends React.Component{
             )
             .catch(err => {
                 this.setState({loading: false});
-                console.log(err + ' errooooooor');
+                console.log(err);
             });           
         } catch (error) {
             this.setState({
@@ -123,6 +123,7 @@ class MainViewCalendar extends React.Component{
                     itemHour: moment(item.start_date, moment.HTML5_FMT.TIME_SECONDS).format("h:mm A"),
                     itemImage: item.image,
                     itemDescription: item.description,
+                    coachDescription: item.coach_description,
                 }) }
                 name = {item.name}
                 hour = {moment(item.start_date, moment.HTML5_FMT.TIME_SECONDS).format("h:mm A")}
