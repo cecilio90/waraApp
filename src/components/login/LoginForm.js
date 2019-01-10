@@ -140,6 +140,15 @@ class LoginForm extends React.Component{
 							Iniciar Sesión
 						</Button>
 					</View>
+
+					<View style={ [styles.buttonContent, {marginTop:10}] }>
+						<Button
+							whenPress= {() => this.props.navigation.navigate('Register') }
+							myStyles={styles.login}
+						>
+							Registrarse
+						</Button>
+					</View>
 				</View>
 			);
 		}
