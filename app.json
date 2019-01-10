@@ -4,6 +4,12 @@
     "slug": "waraworkout",
     "sdkVersion": "27.0.0",
     "privacy": "public",
+    "icon": "./src/assets/imgs/home.png",
+    "splash": {
+      "image": "./src/assets/imgs/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
     "android": {
       "package": "com.wara.myapp",
       "versionCode": 1,
