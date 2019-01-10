@@ -3,6 +3,7 @@ import { createSwitchNavigator } from 'react-navigation';
 import { AsyncStorage } from 'react-native';
 import Login from './src/screens/Login';
 import Home from './src/screens/Home';
+import Register from './src/screens/Register';
 
 export default class App extends React.Component{
   render(){
@@ -15,4 +16,7 @@ export default class App extends React.Component{
 const AppSwitchNavigator = new createSwitchNavigator({
   Login: Login,
   Home: Home,
+  Register: Register,
+  
+  
 }); 
