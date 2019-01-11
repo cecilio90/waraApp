@@ -9,17 +9,11 @@ export default class Login extends React.Component{
 	}
 	
 	componentDidMount () {
-		setTimeout(() => {
-			this.setState({ ready: true })
-		}, 2000)
+		
 	}
 
 	render() {	
-		if (this.state.ready === false) {
-			return(
-				<Splash />
-			);
-		}	
+		
 		return(
 			<KeyboardAvoidingView 
 				style={styles.container} 

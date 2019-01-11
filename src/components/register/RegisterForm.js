@@ -88,7 +88,7 @@ class RegisterForm extends React.Component{
 					<View style={{alignSelf:'center', marginTop:30}}>
 						<TouchableOpacity
 							onPress={()=>{
-								this.props.navigation.navigate('Login ')
+								this.props.navigation.navigate('Login')
 							}}
 						>
 							<Text style={{color: 'rgba(241,78,59,0.7)'}}>¿Ya tienes una cuenta? Inicia sesión</Text>
