@@ -4,6 +4,32 @@ import {Header} from './index';
 
 export default class Menu extends React.Component{
 
+    state = {
+        status: false
+    }
+
+    componentDidMount(){
+        this._getCurrentUserStatus();    
+    }
+
+    _getCurrentUserStatus = async () => {
+        const token = await AsyncStorage.getItem('@MySuperStore:accessToken');
+        fetch('http://iqserviciosinmobiliarios.com.mx/api/user-status', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer '+ token, 
+                'Content-Type': 'application/json'
+            }, 
+        })
+            .then(response => response.json())
+            .then(resp => {
+                this.setState({status: resp.data})
+            })
+        .catch(err => {
+            console.log(err)
+        });
+    }
+
     _getCurrentScreen(){
         if (this.props.activeItemKey == 'Lessons') {
             this.props.navigation.navigate('Lessons');
@@ -34,12 +60,16 @@ export default class Menu extends React.Component{
                     <TouchableOpacity style={styles.btnMenu} onPress={() => this._getCurrentScreen() }>
                         <Text style={styles.opcMenu}>Clases</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('Califications')}>
-                        <Text style={styles.opcMenu}>Calificaciones</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('ListNews') }>
-                        <Text style={styles.opcMenu}>Noticias</Text>
-                    </TouchableOpacity>
+                    { this.state.status && 
+                        <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('Califications')}>
+                            <Text style={styles.opcMenu}>Calificaciones</Text>
+                        </TouchableOpacity>
+                    }
+                    { this.state.status && 
+                        <TouchableOpacity style={styles.btnMenu} onPress={() => this.props.navigation.navigate('ListNews') }>
+                            <Text style={styles.opcMenu}>Noticias</Text>
+                        </TouchableOpacity>
+                    }
                     <TouchableOpacity style={styles.btnMenu} onPress={() => this._logout()}>
                         <Text style={styles.opcMenu}>Salir</Text>
                     </TouchableOpacity>

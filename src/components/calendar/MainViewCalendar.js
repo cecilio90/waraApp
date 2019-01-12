@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Dimensions, ImageBackground, Text, FlatList, AsyncStorage } from 'react-native';
+import { withNavigation, DrawerActions } from 'react-navigation';
+import { Permissions, Notifications } from 'expo';
+import moment from 'moment';
+
 import { Header, Spinner } from '../commons';
 import Calendar from './Calendar';
-import moment from 'moment';
-import { withNavigation, DrawerActions } from 'react-navigation';
 import LessonItem from './LessonItem';
 
 moment.updateLocale('es', {
@@ -15,6 +17,37 @@ moment.updateLocale('es', {
 });
 
 const { width, height } = Dimensions.get('window');
+const PUSH_ENDPOINT = 'http://iqserviciosinmobiliarios.com.mx/api/save_notification_token';
+
+async function registerPushNotifications() {
+    const { status } = await Permissions.askAsync(
+        Permissions.NOTIFICATIONS
+    );
+
+    if (status !== 'granted') {
+        alert('Habilita los permisos en ajustes');
+        return;
+    }
+
+    const push_token = await Notifications.getExpoPushTokenAsync();
+    const token = await AsyncStorage.getItem('@MySuperStore:accessToken');
+
+    fetch(PUSH_ENDPOINT, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer '+ token, 
+            'Content-Type': 'application/json'
+        }, 
+        body: JSON.stringify({
+            push_token: push_token,
+        }),
+    })
+        .then(response => response.json())
+        .then(resp => console.log(resp))
+    .catch(err => {
+        console.log(err)
+    });
+}
 
 class MainViewCalendar extends React.Component{
 
@@ -36,9 +69,18 @@ class MainViewCalendar extends React.Component{
         this._getToken;
     }
 
-    componentWillMount(){
+    componentDidMount()
+    {
+        registerPushNotifications();
+        this._notificationSubscription = Notifications.addListener(this._handleNotification);
         this._getCurrentSchedule();
     }
+
+    _handleNotification = (notification) => {
+        if(notification.origin === 'selected'){
+            this.props.navigation.navigate('News')
+        }
+    };
 
     _getCurrentSchedule = async () => {
         this.setState({
@@ -66,7 +108,7 @@ class MainViewCalendar extends React.Component{
             )
             .catch(err => {
                 this.setState({loading: false});
-                console.log(err + ' errooooooor');
+                console.log(err);
             });           
         } catch (error) {
             this.setState({
@@ -105,7 +147,7 @@ class MainViewCalendar extends React.Component{
                 })
             .catch((error) => {
                 this.setState({loading: false});
-                console.warn(error);
+                console.log(error);
             });
         } catch (error) {
             console.log(error)
@@ -123,6 +165,7 @@ class MainViewCalendar extends React.Component{
                     itemHour: moment(item.start_date, moment.HTML5_FMT.TIME_SECONDS).format("h:mm A"),
                     itemImage: item.image,
                     itemDescription: item.description,
+                    coachDescription: item.coach_description,
                 }) }
                 name = {item.name}
                 hour = {moment(item.start_date, moment.HTML5_FMT.TIME_SECONDS).format("h:mm A")}

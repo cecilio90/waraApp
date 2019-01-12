@@ -20,15 +20,60 @@ class RegisterForm extends React.Component{
 	    }
 	}
 
-	componentWillMount(){
-		
+	_register(){
+		this.setState({loading: true});
+
+        fetch('http://iqserviciosinmobiliarios.com.mx/api/register', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                dni: this.state.dni,
+                name: this.state.name,
+                email: this.state.email,
+				phone: this.state.phone,
+				user_app: true
+            }),
+        }).then(response => response.json())
+		.then(data => {
+			this.setState({loading: false});
+			if (data.status == 'success') {
+				Alert.alert(
+					'Registro exitoso',
+					'¡Felicidades! ya haces parte de WaraWorkout. Tu cuenta pronto será activada.',
+					[
+						{ text: 'Ok', onPress: () => this.props.navigation.navigate('Login') }
+					]
+				)
+			}else if(data.dni || data.name || data.phone || data.email) {
+				Alert.alert(
+					'¡Ups!',
+					this._getErrors(data),
+					[
+						{text: 'Ok', onPress: () => console.log('Ok') },
+					],
+					{ cancelable: false }
+				)
+			}
+		})
+        .catch((error) => {
+			this.setState({loading: false});
+            console.log(error + 'errooooooooor');
+        });
 	}
 
-	_register(){
-		console.log(`DNI: ${this.state.dni}`);
-		console.log(`Nombre: ${this.state.name}`);
-		console.log(`Teléfono: ${this.state.phone}`);
-		console.log(`Correo: ${this.state.email}`);
+	_getErrors(errors){
+		if(errors.dni){
+			return errors.dni.toString();
+		} else if(errors.phone) {
+			return errors.phone.toString();
+		} else if(errors.name) {
+			return errors.name.toString();
+		} else {
+			return errors.email.toString();
+		}
 	}
 
 	render() {
@@ -48,22 +93,24 @@ class RegisterForm extends React.Component{
 						onChangeText={ dni => this.setState({dni}) }
 						placeholder={'DNI'}
 						returnKeyType={'next'}
-						onSubmitEditing={()=>this.passwordInput.focus()}
+						onSubmitEditing={()=>this.nameInput.focus()}
 					/>
 		
 					<Input 
 						value={this.state.name}
 						onChangeText={ name => this.setState({name}) }
 						placeholder={'Nombre Completo'}
-						returnKeyType={'go'}
-						onSubmitEditing={()=>this.passwordInput.focus()}
+						returnKeyType={'next'}
+						refe={(input)=> this.nameInput=input}
+						onSubmitEditing={()=>this.phoneInput.focus()}
 					/>
 
 					<Input 
 						value={this.state.phone}
 						onChangeText={ phone => this.setState({phone}) }
 						placeholder={'Teléfono'}
-						returnKeyType={'go'}
+						returnKeyType={'next'}
+						refe={(input)=> this.phoneInput=input}
 						onSubmitEditing={()=>this.passwordInput.focus()}
 					/>
 
@@ -72,6 +119,7 @@ class RegisterForm extends React.Component{
 						onChangeText={ email => this.setState({email}) }
 						placeholder={'Correo'}
 						returnKeyType={'go'}
+						refe={(input)=> this.passwordInput=input}
 						onSubmitEditing={()=>this.passwordInput.focus()}
 					/>
 		
@@ -88,7 +136,9 @@ class RegisterForm extends React.Component{
 					<View style={{alignSelf:'center', marginTop:30}}>
 						<TouchableOpacity
 							onPress={()=>{
-								this.props.navigation.navigate('Login')
+								this.props.navigation.navigate('Login',{
+									splash: false
+								})
 							}}
 						>
 							<Text style={{color: 'rgba(241,78,59,0.7)'}}>¿Ya tienes una cuenta? Inicia sesión</Text>

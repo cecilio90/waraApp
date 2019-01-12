@@ -25,7 +25,6 @@ export default class ListNews extends React.Component{
         try {
             let token = await AsyncStorage.getItem('@MySuperStore:accessToken');
             let cred = await AsyncStorage.getItem('@MySuperStore:credentials');
-            console.warn(cred)
             fetch('http://iqserviciosinmobiliarios.com.mx/api/news', { 
                 method: 'GET', 
                 headers: new Headers({

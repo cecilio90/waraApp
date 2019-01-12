@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "447864819902",
+    "firebase_url": "https://wara-workout.firebaseio.com",
+    "project_id": "wara-workout",
+    "storage_bucket": "wara-workout.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447864819902:android:138479301fccdb9b",
+        "android_client_info": {
+          "package_name": "com.wara.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447864819902-mt4ibve7n2bir3j5f60mdei2cp6064hh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2KCRZbtJAV12COveN9n19QJp7TBezwAI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

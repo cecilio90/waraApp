@@ -92,7 +92,7 @@ NewsStackNavigator.navigationOptions = ({ navigation }) => {
 
 export default AppDrawerNavigator = new createDrawerNavigator({
     Lessons: { 
-        screen: LessonStackNavigator
+        screen: LessonStackNavigator,
     },
     Califications: {
         screen: CalificationStackNavigator

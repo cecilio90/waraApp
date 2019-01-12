@@ -1,9 +1,26 @@
 import React from 'react';
-import { View, Text, ImageBackground, Dimensions, Image } from 'react-native';
+import { 
+    View, 
+    Text, 
+    ImageBackground, 
+    Dimensions, 
+    Image,
+    TouchableOpacity 
+} from 'react-native';
+
+import ModalCoach from './ModalCoach';
 
 const { width, height } = Dimensions.get('window');
 
 export default class ShowLesson extends React.Component{
+
+    state = {
+        visible: false
+    }
+
+    toggleModal = () => {
+        this.setState({visible: !this.state.visible });
+    }
 
     static navigationOptions = ({ navigation }) => ({
         title: 'Clase',
@@ -27,14 +44,21 @@ export default class ShowLesson extends React.Component{
         const itemImage = navigation.getParam('itemImage', 'NO-IMAGE');
         const itemDescription = navigation.getParam('itemDescription', 'NO-DESCRIPTION');
         const coachName = navigation.getParam('coachName', 'NO-COACH-NAME');
+        const itemCoachDescription = navigation.getParam('coachDescription', 'NO-COACH-NAME');
         return(
             <View style={styles.container}>
                 <ImageBackground style={styles.image} source={require('../../assets/imgs/home.png')}>
                     <View style={styles.headerInformation}>
-                        <View style={styles.imgCoach}>
+                        <TouchableOpacity onPress={() => this.toggleModal()} style={styles.imgCoach}>
                             <Image style={{width: 70, height: 70, borderRadius: 50}} source={{uri: itemImage}}/>
                             <Text numberOfLines={1} ellipsizeMode='tail' style={{color: 'white'}}>{coachName}</Text>
-                        </View>
+                        </TouchableOpacity>
+                        <ModalCoach
+                            coach={coachName}
+                            coachDescription={itemCoachDescription} 
+                            visible={this.state.visible}
+                            hideModal={() => this.toggleModal()}
+                        />
                         <View style={styles.infoLesson}>
                             <Text style={{color: 'white', fontSize:20}}>{itemName}</Text>
                             <Text style={{color: 'white', fontSize:14}}>Jueves / Julio 28</Text>
