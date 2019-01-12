@@ -4,13 +4,6 @@ import RegisterForm from '../components/register/RegisterForm';
 import Splash from '../screens/Splash';
 
 export default class Login extends React.Component{
-	state = {
-		ready: false,
-	}
-	
-	componentDidMount () {
-		
-	}
 
 	render() {	
 		

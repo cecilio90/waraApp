@@ -4,12 +4,7 @@
     "slug": "waraworkout",
     "sdkVersion": "27.0.0",
     "privacy": "public",
-    "icon": "./src/assets/imgs/home.png",
-    "splash": {
-      "image": "./src/assets/imgs/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
-    },
+    "icon": "./src/assets/imgs/logo2.png",
     "android": {
       "package": "com.wara.myapp",
       "versionCode": 1,
@@ -24,7 +19,8 @@
         "READ_EXTERNAL_STORAGE",
         "VIBRATE",
         "WRITE_EXTERNAL_STORAGE"
-      ]
+      ],
+      "googleServicesFile": "./google-services.json"
     }
   }
 }

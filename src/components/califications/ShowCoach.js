@@ -74,7 +74,6 @@ class ShowCoach extends Component{
                         <HeaderCoach score={this.state.score} lessonName={lessonName} coachImage={coachImage}/>
                         <Calification coachId={coachId} />
                     </View>
-                    <ListComments entrenadorId={coachId}/>
                 </ImageBackground>
             </View>
         );
